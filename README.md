@@ -1,6 +1,24 @@
-# Unix/Linux là gì
+# TỔNG QUAN VỀ UNIX/LINUX
 
-## Định nghĩa Unix/Linux
+----
+
+- [TỔNG QUAN VỀ UNIX/LINUX](#t%E1%BB%95ng-quan-v%E1%BB%81-unixlinux)
+  - [1. Định nghĩa Unix/Linux](#1-%C4%91%E1%BB%8Bnh-ngh%C4%A9a-unixlinux)
+  - [2. Cấu trúc Unix/Linux](#2-c%E1%BA%A5u-tr%C3%BAc-unixlinux)
+  - [3. Khởi động hệ thống trong Unix/Linux](#3-kh%E1%BB%9Fi-%C4%91%E1%BB%99ng-h%E1%BB%87-th%E1%BB%91ng-trong-unixlinux)
+  - [4. Đăng nhập Unix/Linux](#4-%C4%91%C4%83ng-nh%E1%BA%ADp-unixlinux)
+  - [5. Đăng nhập hệ thống Unix/Linux](#5-%C4%91%C4%83ng-nh%E1%BA%ADp-h%E1%BB%87-th%E1%BB%91ng-unixlinux)
+  - [6. Thay đổi mật khẩu trong Unix/Linux](#6-thay-%C4%91%E1%BB%95i-m%E1%BA%ADt-kh%E1%BA%A9u-trong-unixlinux)
+  - [7. Liệt kê thư mục và file trong Unix/Linux](#7-li%E1%BB%87t-k%C3%AA-th%C6%B0-m%E1%BB%A5c-v%C3%A0-file-trong-unixlinux)
+  - [8. Lệnh whoami trong Unix/Linux](#8-l%E1%BB%87nh-whoami-trong-unixlinux)
+  - [9. Ai đã đăng nhập trong Unix/Linux](#9-ai-%C4%91%C3%A3-%C4%91%C4%83ng-nh%E1%BA%ADp-trong-unixlinux)
+  - [10. Đăng xuất trong Unix/Linux](#10-%C4%91%C4%83ng-xu%E1%BA%A5t-trong-unixlinux)
+  - [11. Để thoát khỏi chương trình](#11-%C4%91%E1%BB%83-tho%C3%A1t-kh%E1%BB%8Fi-ch%C6%B0%C6%A1ng-tr%C3%ACnh)
+  - [12. Đóng hệ thống trong Unix/Linux](#12-%C4%91%C3%B3ng-h%E1%BB%87-th%E1%BB%91ng-trong-unixlinux)
+
+----
+
+## 1. Định nghĩa Unix/Linux
 
 Hệ điều hành Unix là tập hợp các chương trình mà thực hiện vai trò như một đường link giữa máy tính và người sử dụng.
 
@@ -16,7 +34,7 @@ Nhiều người có thể sử dụng một máy tính Unix cùng một lúc; v
 
 Một người sử dụng có thể chạy nhiều chương trình cùng một lúc; vì thế Unix được gọi là đa nhiệm.
 
-## Cấu trúc Unix/Linux
+## 2. Cấu trúc Unix/Linux
 
 Sơ đồ dưới là cấu trúc của một hệ thống Unix:
 
@@ -32,19 +50,19 @@ Khái niệm chính mà được thống nhất trong tất cả các phiên b�
 * **Các lệnh và các tiện ích:** Có rất nhiều lệnh và tiện ích mà bạn có thể sử dụng trong công việc hàng ngày. cp, mv, cat và grep … là một số ví dụ của lệnh và tiện ích. Có trên 250 lệnh tiêu chuẩn cộng với một số lệnh khác được cung cấp bởi phần mềm thứ 3. Tất cả các lệnh này đi cùng với các tùy chọn (chức năng) của nó.
 * **File và thư mục:** Tất cả dữ liệu trong Unix được tổ chức trong các file. Tất cả các file được tổ chức vào trong các thư mục. Những thư mục này được tổ chức trong một cấu trúc dạng cây được gọi như là hệ thống file.
 
-## Khởi động hệ thống trong Unix/Linux
+## 3. Khởi động hệ thống trong Unix/Linux
 
 Nếu bạn có một máy tính mà đã cài đặt hệ điều hành Unix trên đó, thì sau đó đơn giản bạn chỉ cần bật để khởi động hệ thống.
 
 Ngay sau khi bạn bật hệ thống, hệ thống bắt đầu khởi động và cuối cùng nó nhắc bạn đăng nhập vào trong hệ thống, mà hành động đăng nhập này được sử dụng cho các hoạt động thường ngày.
 
-## Đăng nhập Unix/Linux
+## 4. Đăng nhập Unix/Linux
 
 Khi bạn lần đầu kết nối với một hệ thống Unix, bạn thường nhìn thấy một dòng nhắc như sau:
 
 >login:
 
-## Đăng nhập hệ thống Unix/Linux
+## 5. Đăng nhập hệ thống Unix/Linux
 
 1. Chuẩn bị sẵn sàng ID sử dụng và mật khẩu. Liên hệ với người quản lý nếu bạn chưa có nó.
 2. Nhập ID tại dòng nhắc đăng nhập, sau đó nhấn Enter. ID của bạn là phân biệt chữ hoa-thường, vì thế chắc chắn rằng bạn đã nhập chính xác như người quản lý đã chỉ dẫn.
@@ -72,7 +90,7 @@ Su Mo Tu We Th Fr Sa
 $
 ```
 
-## Thay đổi mật khẩu trong Unix/Linux
+## 6. Thay đổi mật khẩu trong Unix/Linux
 
 Tất cả các hệ điều hành Unix đều yêu cầu mật khẩu để đảm bảo cho các dữ liệu và file của bạn và cũng đảm bảo an toàn cho chính hệ thống chống lại sự thâm nhập của hacker hoặc cracker. Dưới đây là các bước để thay đổi mật khẩu:
 
@@ -93,7 +111,7 @@ $
 
 * **Ghi chú:** Tôi đã đặt dấu * vào vị trí chỉ cho bạn địa điểm bạn cần nhập mật khẩu cũ và mới. Ngoài ra tại hệ thống của bạn, nó sẽ không hiển thị bất cứ ký tự nào khi bạn gõ mật khẩu vào.
 
-## Liệt kê thư mục và file trong Unix/Linux
+## 7. Liệt kê thư mục và file trong Unix/Linux
 
 Tất cả dữ liệu trong Unix được tổ chức vào trong các file. Tất cả các file được tổ chức vào trong các thư mục. Những thư mục này được tổ chức vào trong một cấu trúc cây được gọi là hệ thống file.
 
@@ -118,7 +136,7 @@ $
 
 Ở đây, các kết quả mà bắt đầu với d…… biểu diễn các thư mục. Ví dụ như uml, univ và urlspedia là các thư mục và phần còn lại là file.
 
-## Lệnh whoami trong Unix/Linux
+## 8. Lệnh whoami trong Unix/Linux
 
 Trong khi bạn đăng nhập vào hệ thống, bạn có thể sẵn lòng để biết: Who am I?
 
@@ -133,7 +151,7 @@ $
 
 Hãy thử nó trên hệ thống của mình. Lệnh này liệt kê các tên tài khoản liên kết với sự đăng nhập hiện tại. Bạn có thể thử lệnh whoami cũng để nhận thông tin về chính mình.
 
-## Ai đã đăng nhập trong Unix/Linux
+## 9. Ai đã đăng nhập trong Unix/Linux
 
 Đôi khi bạn có thể muốn biết ai đã đăng nhập vào máy tính trong cùng thời gian.
 
@@ -153,15 +171,15 @@ $
 
 Bạn hãy thử lệnh w trên hệ thống của bạn để kiểm tra kết quả. Lệnh này sẽ liệt kê một số thông tin liên quan tới người đăng nhập vào trong hệ thống.
 
-## Đăng xuất trong Unix/Linux
+## 10. Đăng xuất trong Unix/Linux
 
 Khi bạn đã kết thúc phiên làm việc của mình, bạn cần thoát khỏi chương trình để đảm bảo rằng không ai có thể truy cập vào các file của bạn khi họ giả trang bạn.
 
-## Để thoát khỏi chương trình
+## 11. Để thoát khỏi chương trình
 
 Bạn chỉ cần gõ lệnh logout tại dòng lệnh nhắc, và hệ thống sẽ vệ sinh mọi thứ và ngắt kết nối.
 
-## Đóng hệ thống trong Unix/Linux
+## 12. Đóng hệ thống trong Unix/Linux
 
 Cách phù hợp nhất để đóng hệ thống Unix là thông qua sử dụng một trong các lệnh sau:
 
