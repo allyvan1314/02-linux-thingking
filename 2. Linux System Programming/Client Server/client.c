@@ -93,13 +93,51 @@ int main(int argc, char** argv)
         }
     }
 
+    insertionSort(ballInfor, countBall);
+
+    send(sockfd, &countBall, sizeof(int), 0);
+    send(sockfd, ballInfor, sizeof(int)*countBall, 0);
+
     char filename[100];
     strcpy(filename, "client_file/");
-    strcat(name, ".txt");
     strcat(filename, name);
+    strcat(filename, ".txt");
+    FILE *cl_file;
+    cl_file = fopen(filename, "w");
+    for(int i = 0; i < countBall; i++)
+    {
+        fprintf(cl_file, "%d\n", ballInfor[i]);
+    }
+    fclose(cl_file);
+
+    /* while (strcmp(ser_mess, "start") != 0)
+    {
+        recv(sockfd, ser_mess, 2000, 0);
+    }
+
+    int rank;
+    recv(sockfd, (void*) &rank, sizeof(int), 0);
+
+    printf("Player %s rank %d\n", name, rank); */
 
     //printf("Recv: %d\n", buffer);
     close(sockfd);
 
     return 0;    
+}
+
+void insertionSort(int *arr, int length)
+{
+	int i, key, j;
+	for (i = 1; i < length; i++)
+	{
+		key = arr[i];
+		j = i - 1;
+		while (j >= 0 && arr[j] > key)
+		{
+			arr[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+	}
 }

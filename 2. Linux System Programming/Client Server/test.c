@@ -1,28 +1,40 @@
 #include <stdio.h>
-#include <string.h>    //strlen
-#include <stdlib.h>    //strlen
-#include <sys/socket.h>
-#include <arpa/inet.h>   //inet_addr
-#include <unistd.h>     //write
-#include <pthread.h>   //for threading , link with lpthread
-#include <time.h>
-
-int i = 0;
-
-void* count(int num)
-{
-    i++;
-    printf("Thread %d : i = %d\n",num, i);
-}
 
 int main()
 {
-    pthread_t thread;
-
-    for(int j = 0; j < 3; j++)
+    FILE *test;
+    test = fopen("test.txt", "r");
+    char name[100][10];
+    int sum[10];
+    int i = 0;
+    while(!feof(test))
     {
-        pthread_create(&thread, NULL, count, j);
-        pthread_join(thread, NULL);
+        fscanf(test, "%s", name[i]);
+        fscanf(test, "%d", &sum[i]);
+        printf("%s: %d\n", name[i], sum[i]);
+        i++;
     }
+    fclose(test);
+
+    int *rank = (int*)malloc(sizeof(int)*i);
+    for(int j = 0; j < i; j++)
+    {
+        rank[j] = 1;
+    }
+
+    for(int m = 0; m < i; m++)
+    {
+        for(int n = 0; n < i; n++)
+        {
+            if(sum[m] < sum[n])
+                rank[m]++;
+        }
+    }
+
+    for(int k = 0; k < i; k++)
+    {
+        printf("%s: %d\n", name[k], rank[k]);
+    }
+
     return 0;
 }
