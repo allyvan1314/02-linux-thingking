@@ -7,10 +7,10 @@
 #include <pthread.h>   //for threading , link with lpthread
 #include <time.h>
 
-int numberBall;
-int countBall = 0;
+int numberBall, countBall = 0;
 int *arr;
 pthread_mutex_t mutex;
+int num_Cl, count_Cl = 0;
 
 //the thread function
 void *Play(void *);
@@ -22,7 +22,7 @@ int main(int argc , char *argv[])
 
     srand(time(NULL));
     //numberBall = rand() % (1000 - 100 + 1) + 100;
-    numberBall = 10;
+    numberBall = 50;
     arr = (int*)malloc(sizeof(int)*numberBall);
     for (int i = 0; i < numberBall; i++)
     {
@@ -34,9 +34,8 @@ int main(int argc , char *argv[])
     int socket_desc , client_sock , c;
     struct sockaddr_in server , client;
 
-    int num_Cl;
     printf("Enter number player: ");
-    scanf("%d",&num_Cl);
+    scanf("%d", &num_Cl);
      
     //Create socket
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -64,13 +63,9 @@ int main(int argc , char *argv[])
     listen(socket_desc , 3);
      
     //Accept and incoming connection
-    puts("Waiting for incoming connections...");
+    printf("Waiting for %d connections...", num_Cl);
     c = sizeof(struct sockaddr_in);
-     
-     
-    //Accept and incoming connection
-    puts("Waiting for incoming connections...");
-    c = sizeof(struct sockaddr_in);
+
 	pthread_t thread_id[num_Cl];
 
     int countCl = 0;
@@ -90,7 +85,6 @@ int main(int argc , char *argv[])
         {
             countCl++;
         }
-        //Now join the thread , so that we dont terminate before the thread
         //pthread_join( thread_id , NULL);
         puts("Handler assigned");
     }
@@ -112,20 +106,31 @@ void *Play(void *socket_desc)
     int sock = *(int*)socket_desc;
     int read_size;
     char client_message[2000], cl_name[100];
-     
-    //Receive a message from client
+
+    count_Cl++;
+    printf("Client %d connected!\n", count_Cl);
+    // wait for all connection
+
+    while(count_Cl < num_Cl)
+    {
+        strcpy(client_message, "wait");
+        send(sock, client_message, sizeof(client_message), 0);
+    }
+    strcpy(client_message, "start");
+    send(sock, client_message, sizeof(client_message), 0);
+    
     while(countBall < numberBall)
     {
         read_size = recv(sock , cl_name , 100 , 0);
-        
+        sleep(0.01);
         pthread_mutex_lock(&mutex);
         send(sock, &arr[countBall], sizeof(int), 0);
         printf("Send %d to %s...\n", arr[countBall], cl_name);
-		
-        countBall++;
+		countBall++;
         pthread_mutex_unlock(&mutex);
     }
-    send(sock, 0, sizeof(int), 0);
+    int x = 0;
+    send(sock, &x, sizeof(int), 0);
      
     if(read_size == 0)
     {
@@ -139,4 +144,4 @@ void *Play(void *socket_desc)
 
     pthread_mutex_destroy(&mutex);
     return 0;
-} 
+}

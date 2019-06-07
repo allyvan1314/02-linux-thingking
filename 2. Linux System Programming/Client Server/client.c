@@ -59,6 +59,12 @@ int main(int argc, char** argv)
     // Tao mang luu thong tin ball
     int ballInfor[1000];
     int countBall = 0;
+    char ser_mess[2000];
+
+    while (strcmp(ser_mess, "start") != 0)
+    {
+        recv(sockfd, ser_mess, 2000, 0);
+    }
 
     while (1)
     {
@@ -86,6 +92,11 @@ int main(int argc, char** argv)
             }
         }
     }
+
+    char filename[100];
+    strcpy(filename, "client_file/");
+    strcat(name, ".txt");
+    strcat(filename, name);
 
     //printf("Recv: %d\n", buffer);
     close(sockfd);
