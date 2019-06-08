@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 
     while (1)
     {
-        ret = write(sockfd, name, sizeof(name));
+        ret = send(sockfd, name, sizeof(name), 0);
         if (ret < 0)
         {
             printf("Error sending data!\n");
@@ -81,7 +81,7 @@ int main(int argc, char** argv)
         }
         else
         {
-            if (buffer == 0)
+            if (buffer == 0 || buffer > 500)
                 break;
             else
             {
@@ -92,11 +92,16 @@ int main(int argc, char** argv)
             }
         }
     }
+    sleep(1);
+    
+    for(int v = 0; v < countBall; v++)
+    {
+        int temp = htonl(ballInfor[v]);
+        send(sockfd, &temp, sizeof(int), 0);
+    }
+    
 
     insertionSort(ballInfor, countBall);
-
-    send(sockfd, &countBall, sizeof(int), 0);
-    send(sockfd, ballInfor, sizeof(int)*countBall, 0);
 
     char filename[100];
     strcpy(filename, "client_file/");

@@ -11,7 +11,6 @@ int numberBall, countBall = 0;
 int *arr;
 pthread_mutex_t mutex;
 int num_Cl, count_Cl = 0;
-int *result;
 int cl_id;
 
 //the thread function
@@ -28,7 +27,7 @@ int main(int argc , char *argv[])
     arr = (int*)malloc(sizeof(int)*numberBall);
     for (int i = 0; i < numberBall; i++)
     {
-        arr[i] = rand() % (500) + 1;
+        arr[i] = rand() % (500 - 10 + 1) + 10;
         fprintf(ballInfor, "%d\n", arr[i]);
     }
     fclose(ballInfor);
@@ -39,7 +38,7 @@ int main(int argc , char *argv[])
     printf("Enter number player: ");
     scanf("%d", &num_Cl);
 
-    result = (int*)malloc(sizeof(int)*num_Cl);
+    //result = (int*)malloc(sizeof(int)*num_Cl);
      
     //Create socket
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -93,11 +92,41 @@ int main(int argc , char *argv[])
         puts("Handler assigned");
     }
 
-
-
     for (int j = 0; j < num_Cl; j++)
         pthread_join(thread_id[j], NULL);
     
+
+    //puts("done!");
+    /* char nameCl[100][10];
+    int sum[10], rank[10], v = 0;
+    FILE *sumRank = fopen("server_file/result.txt", "r");
+    while(!feof(sumRank))
+    {
+        fscanf(sumRank, "%s", nameCl[v]);
+        fscanf(sumRank, "%d", &sum[v]);
+        rank[v] = 1;
+        v++;
+    }
+    fclose(sumRank);
+
+    for(int m = 0; m < v; m++)
+    {
+        for(int n = m; n < v; n++)
+        {
+            if(sum[m] < sum[n])
+                rank[m]++;
+        }
+    }
+
+    FILE *final = fopen("server_file/rank.txt", "w");
+
+    for(int m = 0; m < v; m++)
+    {
+        fprintf(final, "Player %s has %d point and rank %d\n", nameCl[m], sum[m], rank[m]);
+        printf("Player %s has %d point and rank %d\n", nameCl[m], sum[m], rank[m]);
+    }
+    fclose(final);
+ */
     if (client_sock < 0)
     {
         perror("accept failed");
@@ -110,7 +139,7 @@ int main(int argc , char *argv[])
 void *Play(void *socket_desc)
 {
     int sock = *(int*)socket_desc;
-    int read_size;
+    int read_size, length = 0;
     char client_message[2000], cl_name[100];
 
     count_Cl++;
@@ -129,22 +158,34 @@ void *Play(void *socket_desc)
     while(countBall < numberBall)
     {
         read_size = recv(sock , cl_name , 100 , 0);
-        sleep(0.1);
+        sleep(1);
         pthread_mutex_lock(&mutex);
         send(sock, &arr[countBall], sizeof(int), 0);
         printf("Send %d to %s...\n", arr[countBall], cl_name);
 		countBall++;
         pthread_mutex_unlock(&mutex);
+
+        if(arr[countBall-1] <= 500)
+            length++;
     }
     int x = 0;
     send(sock, &x, sizeof(int), 0);
 
     int sum = 0;
-    int *cl_arr, length;
-    recv(sock, (void*)&length, sizeof(int), 0);
-    cl_arr = (int*)malloc(sizeof(int)*length);
-    recv(sock, cl_arr, sizeof(int)*length, 0);
+    int *cl_arr;
 
+    printf("length2 %s = %d\n", cl_name, length);
+    cl_arr = (int*)malloc(sizeof(int)*length);
+    //read(sock,(void*) cl_arr, sizeof(int)*length);
+    for(int v = 0; v < length; v++)
+    {
+        int x;
+        read(sock, (void*)&x, sizeof(int));
+        cl_arr[v] = ntohl(x);
+        printf("%s: %d\n", cl_name, cl_arr[v]);
+    }
+
+    /*
     char filename[100];
     strcpy(filename, "server_file/");
     strcat(filename, cl_name);
@@ -153,17 +194,22 @@ void *Play(void *socket_desc)
     cl_file = fopen(filename, "w");
     for(int j = 0; j < length; j++)
     {
-        if(cl_arr[j] <= 500 && cl_arr[j] > 0)
+        if(cl_arr[j] <= 500 && cl_arr[j] >= 10)
         {
-            sum = sum + cl_arr[j];
-            fprintf(cl_file, "%d\n", cl_arr[j]);
+            sum += *(cl_arr + j);
+            fprintf(cl_file, "%d\n", *(cl_arr + j));
         }
+        else
+        {
+            fprintf(cl_file, "%d\n", 0);
+        }
+        
     }
     fclose(cl_file);
+ */
+    /* result[cl_id] = sum;
 
-    //result[cl_id] = sum;
-
-    /* while (result[num_Cl - 1] < 0)
+    while (result[num_Cl - 1] < 0)
     {
         strcpy(client_message, "wait");
         send(sock, client_message, sizeof(client_message), 0);
@@ -171,7 +217,7 @@ void *Play(void *socket_desc)
     strcpy(client_message, "start");
     send(sock, client_message, sizeof(client_message), 0);
 
-    sleep(1);
+    sleep(0.5);
     int rank = 1;
     for (int temp = 0; temp < num_Cl; temp++)
     {
