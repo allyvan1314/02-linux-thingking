@@ -48,11 +48,19 @@ So sánh kết quả giữa lệnh ls -l với file thực thi ls
 
 - Server:
   - Server yêu cầu nhập số client từ 3 - 9, sau đó mở số thread tương ứng cho số client, mỗi client 1 thread và đợi đến khi tất cả client đã kết nối.
-  - Sau khi kết nối hoàn tất, server gửi mess "start", các client liên tục gửi mess là tên của client và nhận về giá trị của ball, sau đó sắp xếp và ghi vào file. Khi server gửi hết toàn bộ ball, server send mess "over" và bắt đầu nhận file, ghi xuống với tên là tên của client và đuôi ".txt". Sau khi ghi đủ số file xuống, server tính toán và gửi rank cho mỗi client.
+  - Sau khi kết nối hoàn tất, server gửi mess "start", các client liên tục gửi mess là tên của client và nhận về giá trị của ball, sau đó sắp xếp và ghi vào file. Khi server gửi hết toàn bộ ball, server send giá trị "-1" và bắt đầu nhận mảng, ghi vào thư mục server_file với tên là tên của client và đuôi ".txt". Sau khi ghi đủ số file xuống, server tính toán và gửi rank cho mỗi client.
 - Client
-  - Yêu cầu kết nối tới server. Sau khi kết nối thành công, thực hiện gửi mess là tên của mình tới server và nhận lại ball. Sau khi nhận được mess là "over", thực hiện gửi file cho server và nhận lại thông báo rank.
+  - Yêu cầu kết nối tới server. Sau khi kết nối thành công, thực hiện gửi mess là tên của mình tới server và nhận lại ball. Sau khi nhận được giá trị là "-1", thực hiện sắp xếp lại mảng, ghi xuống file gửi mảng cho server và nhận lại thông báo rank.
 - Make file
   - Cấu trúc make file:
-  - ![alt](pic/make.png)
+  - ![alt](pic/make1.png)
   - Cú pháp gọi lệnh:
   - ![alt](pic/make2.png)
+- Run:
+
+```bash
+make file
+make build
+make runServer
+make runClient
+```

@@ -68,6 +68,7 @@ int main(int argc, char** argv)
 
     while (1)
     {
+        // request ball from server
         ret = send(sockfd, name, sizeof(name), 0);
         if (ret < 0)
         {
@@ -81,24 +82,25 @@ int main(int argc, char** argv)
         }
         else
         {
-            if (buffer == 0 || buffer > 500)
+            if (buffer == 0 || buffer > 500 || buffer == -1)
                 break;
             else
             {
-                //puts(buffer);
                 printf("Recv: %d\n", buffer);
                 ballInfor[countBall] = buffer;
                 countBall++;
+            
             }
         }
     }
-    sleep(1);
-    
-    for(int v = 0; v < countBall; v++)
+
+    send(sockfd, &countBall, sizeof(int), 0);
+    send(sockfd, ballInfor, sizeof(int)*countBall, 0);
+    /* for(int v = 0; v < countBall; v++)
     {
         int temp = htonl(ballInfor[v]);
         send(sockfd, &temp, sizeof(int), 0);
-    }
+    } */
     
 
     insertionSort(ballInfor, countBall);
@@ -115,7 +117,7 @@ int main(int argc, char** argv)
     }
     fclose(cl_file);
 
-    /* while (strcmp(ser_mess, "start") != 0)
+    while (strcmp(ser_mess, "rank") != 0)
     {
         recv(sockfd, ser_mess, 2000, 0);
     }
@@ -123,7 +125,7 @@ int main(int argc, char** argv)
     int rank;
     recv(sockfd, (void*) &rank, sizeof(int), 0);
 
-    printf("Player %s rank %d\n", name, rank); */
+    printf("Player %s rank %d\n", name, rank);
 
     //printf("Recv: %d\n", buffer);
     close(sockfd);
